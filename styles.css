@@ -1,0 +1,531 @@
+:root {
+    --primary-color: #2196f3;
+    --secondary-color: #f50057;
+    --background-color: #ffffff;
+    --text-color: #333333;
+    --border-color: #e0e0e0;
+    --success-color: #4caf50;
+    --error-color: #f44336;
+    --hover-color: #f5f5f5;
+    --primary-color-rgb: 33, 150, 243;
+
+    --background-start-color: #f4f7f6; /* Light theme start color */
+    --background-end-color: #e0e9e8;   /* Light theme end color */
+}
+
+[data-theme="dark"] {
+    --background-color: #121212;
+    --text-color: #ffffff;
+    --border-color: #333333;
+    --hover-color: #1e1e1e;
+
+    --background-start-color: #1a2a3a; /* Dark theme start color */
+    --background-end-color: #2a1a3a;   /* Dark theme end color */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-color);
+    line-height: 1.6;
+    transition: color 0.3s; /* Transition only color, background handled by theme */
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    /* Base background set by theme blocks */
+}
+
+/* --- Dynamic Background Styles --- */
+/* Base styles for pseudo-elements - hidden by default */
+body::before,
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.8s ease-in-out; /* Fade in/out effect */
+    background-repeat: repeat;
+}
+
+/* Keyframes for twinkling effect */
+@keyframes twinkle {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* Keyframes for moving stars effect */
+@keyframes move-stars {
+    from { background-position: 0 0; }
+    to { background-position: 600px 600px; }
+}
+
+/* --- Theme Specific Backgrounds --- */
+
+/* Light Theme Background (Gradient + Black Stars) */
+[data-theme="light"] {
+     background: linear-gradient(to bottom right, var(--background-start-color), var(--background-end-color));
+}
+
+[data-theme="light"]::before {
+    opacity: 1; /* Make stars visible */
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, #333, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 40px 70px, #333, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 50px 160px, #444, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 90px 120px, #333, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 130px 190px, #333, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 220px 250px, #444, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 250px 90px, #333, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 280px 40px, #444, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 300px 210px, #333, rgba(0,0,0,0));
+    background-size: 400px 400px;
+    animation: twinkle 3s infinite alternate;
+}
+
+[data-theme="light"]::after {
+    opacity: 1; /* Make stars visible */
+    background-image: 
+        radial-gradient(2px 2px at 50% 80%, #555, rgba(0,0,0,0)),
+        radial-gradient(3px 3px at 80% 20%, #555, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 10% 40%, #555, rgba(0,0,0,0)),
+        radial-gradient(3px 3px at 60% 60%, #555, rgba(0,0,0,0));
+    background-size: 600px 600px;
+    animation: move-stars 100s linear infinite;
+}
+
+/* Dark Theme Background (Solid Black + White Stars) */
+[data-theme="dark"] {
+    background-color: #000; /* Set a solid dark background */
+}
+
+[data-theme="dark"]::before {
+    opacity: 1; /* Make stars visible */
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 40px 70px, #eee, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 50px 160px, #ddd, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 90px 120px, #eee, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 130px 190px, #eee, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 220px 250px, #ddd, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 250px 90px, #eee, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 280px 40px, #ddd, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 300px 210px, #eee, rgba(0,0,0,0));
+    background-size: 400px 400px;
+    animation: twinkle 3s infinite alternate;
+}
+
+[data-theme="dark"]::after {
+     opacity: 1; /* Make stars visible */
+     background-image: 
+        radial-gradient(2px 2px at 50% 80%, #fff, rgba(0,0,0,0)),
+        radial-gradient(3px 3px at 80% 20%, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 10% 40%, #fff, rgba(0,0,0,0)),
+        radial-gradient(3px 3px at 60% 60%, #fff, rgba(0,0,0,0));
+     background-size: 600px 600px;
+    animation: move-stars 100s linear infinite;
+}
+
+/* Ensure content containers have background so they are not transparent */
+.container,
+.question-container,
+.scorecard-container {
+    background-color: var(--background-color); /* Explicitly set background */
+    border-radius: 8px;
+}
+
+.screen {
+    display: none;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.screen.active {
+    display: flex;
+}
+
+h1, h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: var(--background-color); /* Explicitly set background */
+    border-radius: 8px;
+    width: 100%; /* Ensure container takes full width up to max-width */
+    display: flex; /* Use flexbox for better control */
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center children horizontally */
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--background-color);
+    transition: border-color 0.3s, background-color 0.3s;
+    width: 100%; /* Ensure form group takes full width of flex container */
+    max-width: 500px; /* Limit maximum width for better readability on large screens */
+}
+
+.form-group:focus-within {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(var(--primary-color-rgb, 33, 150, 243), 0.5); /* Add a subtle glow */
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    cursor: pointer;
+    outline: none; /* Remove default outline */
+    transition: border-color 0.3s;
+}
+
+select:focus {
+    border-color: var(--primary-color);
+}
+
+/* Add a custom arrow for select */
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.362%22%20height%3D%22292.362%22%3E%3Cpath%20fill%3D%22%23333333%22%20d%3D%22M287.9.948c-3.268-3.267-8.55-.995-11.819%202.276L146.18%20150.35L16.27%203.224C13.002-.046%207.72%202.227%204.451%205.494S-.047%2013.946%203.224%2017.21l133.514%20133.513c3.172%203.172%208.28%203.172%2011.452%200L289.03%2017.21c3.267-3.268%203.54-8.55-.04-11.819z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 0.75rem top 50%;
+    background-size: 0.65em auto;
+}
+
+/* Adjust arrow color for dark theme */
+[data-theme="dark"] select {
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.362%22%20height%3D%22292.362%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M287.9.948c-3.268-3.267-8.55-.995-11.819%202.276L146.18%20150.35L16.27%203.224C13.002-.046%207.72%202.227%204.451%205.494S-.047%2013.946%203.224%2017.21l133.514%20133.513c3.172%203.172%208.28%203.172%2011.452%200L289.03%2017.21c3.267-3.268%203.54-8.55-.04-11.819z%22%2F%3E%3C%2Fsvg%3E');
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn.primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn.secondary {
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.theme-toggle {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+.theme-toggle button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Quiz Screen Styles */
+.quiz-header {
+    margin-bottom: 2rem;
+}
+
+.progress {
+    height: 8px;
+    background-color: var(--border-color);
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: var(--primary-color);
+    border-radius: 4px;
+    transition: width 0.3s;
+}
+
+.quiz-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    gap: 2rem; /* Add space between question number and timer */
+}
+
+.question-container {
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.options-grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.option {
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.option:hover {
+    background-color: var(--hover-color);
+}
+
+.option.selected {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.option.correct {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.option.incorrect {
+    background-color: var(--error-color);
+    color: white;
+}
+
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem; /* Add space between buttons */
+}
+
+/* Results Screen Styles */
+.score-container {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.score-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    /* border: 8px solid var(--primary-color); */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 2rem;
+    font-weight: bold;
+    position: relative;
+    background: conic-gradient(var(--primary-color) 0% 0%, var(--border-color) 0% 100%); /* Initial state */
+    overflow: hidden; /* Hide the part outside the circle */
+}
+
+.score-circle::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 16px); /* Inner circle size (150px - 2*8px border) */
+    height: calc(100% - 16px);
+    border-radius: 50%;
+    background-color: var(--background-color); /* Inner color */
+    z-index: 1;
+}
+
+.score-circle span {
+    position: relative;
+    z-index: 2; /* Bring text to front */
+    color: var(--text-color); /* Ensure text color adapts to theme */
+}
+
+.result-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+/* Leaderboard Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    font-weight: 500;
+    background-color: var(--hover-color);
+}
+
+tr:hover {
+    background-color: var(--hover-color);
+}
+
+/* Scorecard Styles */
+.scorecard-container {
+    margin: 2rem 0;
+    padding: 1rem;
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+.scorecard-container h3 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+}
+
+.scorecard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+}
+
+.scorecard-table th,
+.scorecard-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.scorecard-table th {
+    background-color: var(--hover-color);
+    font-weight: 500;
+}
+
+.scorecard-table td.correct {
+    color: var(--success-color);
+    font-weight: bold;
+}
+
+.scorecard-table td.incorrect {
+    color: var(--error-color);
+    font-weight: bold;
+}
+
+.scorecard-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+    background-color: var(--hover-color);
+    border-radius: 8px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+.summary-item span:first-child {
+    font-weight: 500;
+}
+
+.summary-item span:last-child {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* Responsive adjustments for scorecard */
+@media (max-width: 768px) {
+    .scorecard-table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    .scorecard-summary {
+        grid-template-columns: 1fr;
+    }
+    
+    .summary-item {
+        padding: 0.75rem;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .question-container {
+        padding: 1rem;
+    }
+
+    .score-circle {
+        width: 120px;
+        height: 120px;
+        font-size: 1.5rem;
+    }
+
+    .navigation-buttons {
+        flex-direction: column;
+        gap: 1rem; /* Maintain gap when stacked vertically */
+    }
+
+    .btn {
+        width: 100%;
+    }
+    
+    .scorecard-table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    .scorecard-summary {
+        grid-template-columns: 1fr;
+    }
+    
+    .summary-item {
+        padding: 0.75rem;
+    }
+} 
