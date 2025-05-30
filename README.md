@@ -1,4 +1,4 @@
-# Quiz App (Vanilla JavaScript)
+# Quiz App (JavaScript)
 
 This is a simple, modern, and responsive quiz application built using vanilla JavaScript, HTML, and CSS. It allows users to test their knowledge across various categories and difficulty levels.
 
